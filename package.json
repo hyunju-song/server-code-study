@@ -8,7 +8,7 @@
     "node": ">=4.0.0"
   },
   "scripts": {
-    "start": "node server/basic-server.js",
+    "start": "nodemon server/basic-server.js",
     "test": "jest",
     "submit": "node .travis/submit.js"
   },
@@ -23,5 +23,21 @@
     "hooks": {
       "pre-commit": "eslint ./server"
     }
-  }
+  },
+  "main": "basic-server.js",
+  "dependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyunju-song/im-sprint-chatterbox-server.git"
+  },
+  "keywords": [
+    "test"
+  ],
+  "author": "Hyunju Song",
+  "bugs": {
+    "url": "https://github.com/hyunju-song/im-sprint-chatterbox-server/issues"
+  },
+  "homepage": "https://github.com/hyunju-song/im-sprint-chatterbox-server#readme"
 }

@@ -1,5 +1,6 @@
 /* node 의 모듈들을 불러옵니다. */
 const http = require("http");
+const requestHandler = require("./request-handler");
 
 // 모든 서버는 요청을 받을수 있는 포트 번호를 필요로 합니다.
 
@@ -24,7 +25,7 @@ const ip = "127.0.0.1";
 // 현재 requestHandler 정의 되어 있지 않습니다. request-handler.js 에서 해당 모듈을 불러오세요.
 
 const server = http.createServer(requestHandler);
-console.log("Listening on http://" + ip + ":" + port);
+//console.log("Listening on http://" + ip + ":" + port);
 server.listen(port, ip);
 
 // 서버를 시작하기 위해서는 command line에 `node server/basic-server.js` 를 입력하세요.
