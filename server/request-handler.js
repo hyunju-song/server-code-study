@@ -8,7 +8,7 @@ requestHandler 함수를 export 하여 basic-server.js 에서 사용 할 수 있
 
 **************************************************************/
 
-const requestHandler = function(request, response) {
+const requestHandler = function (request, response) {
   // node server 의 requestHandler는 항상 request, response를 인자로 받습니다.
 
   // 또한 http 요청은 항상 요청과 응답이 동반 되어야 합니다.
@@ -19,12 +19,8 @@ const requestHandler = function(request, response) {
   //
   // 간단한 로그를 작성 하는 것은, 서버를 디버깅 하는데 매우 수월하게 해줍니다.
   // 아래는 모든 리퀘스트의 메소드와 url을 로깅 해줍니다.
-  console.log(
-    "Serving request type " + request.method + " for url " + request.url
-  );
-
-  // 응답을 위한 status 코드입니다.
-  const statusCode = 200;
+  /* eslint no-console: 0 */
+  console.log("Serving request type " + request.method + " for url " + request.url);
 
   // 기본 CORS 설정이 되어있는 코드 입니다. 아래에 있습니다.
   // CORS에 대해서는 조금더 알아보세요.
@@ -32,8 +28,8 @@ const requestHandler = function(request, response) {
   // 응답 헤더에 응답하는 컨텐츠의 자료 타입을 헤더에 기록 합니다.
   headers["Content-Type"] = "text/plain";
 
-  // .writeHead() 메소드는 응답 헤더에 해당 key, value 를 적어줍니다.
-  response.writeHead(statusCode, headers);
+  // .writeHead() 메소드의 두번째 인자로는 응답 헤더와 키와 값을 객체 형태로 적어줍니다.
+  response.writeHead(200, headers);
 
   // 노드 서버에 대한 모든 요청은 응답이 있어야 합니다. response.end 메소드는 요청에 대한 응답을 보내줍니다.
   response.end("Hello, World!");
