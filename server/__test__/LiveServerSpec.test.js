@@ -3,20 +3,20 @@ require("jest");
 
 const app = require("../basic-server");
 
-describe("server", function() {
-  test("should respond to GET requests for /classes/messages with a 200 status code", function(done) {
+describe("server", function () {
+  test("GET /messages 요청은 200 상태 코드를 응답해야 합니다", function (done) {
     return request(app)
-      .get("/classes/messages")
+      .get("/messages")
       .then(res => {
         expect(res.status).toEqual(200);
         done();
       });
   });
-  test("should send back parsable stringified JSON", function(done) {
+  test("GET /messages 요청은 파싱 가능한 JSON 문자열을 돌려줘야 합니다", function (done) {
     return request(app)
-      .get("/classes/messages")
+      .get("/messages")
       .then(res => {
-        const isParsable = function(string) {
+        const isParsable = function (string) {
           try {
             JSON.parse(string);
             return true;
@@ -28,18 +28,18 @@ describe("server", function() {
         done();
       });
   });
-  test("should send back an object", function(done) {
+  test("GET /messages 요청의 응답은 객체의 형태여야 합니다", function (done) {
     return request(app)
-      .get("/classes/messages")
+      .get("/messages")
       .then(res => {
         const parsedBody = JSON.parse(res.text);
         expect(typeof parsedBody).toEqual("object");
         done();
       });
   });
-  test("should send an object containing a `results` array", function(done) {
+  test("GET /messages 요청의 응답 객체는 `results`에 배열을 포함해야 합니다", function (done) {
     return request(app)
-      .get("/classes/messages")
+      .get("/messages")
       .then(res => {
         const parsedBody = JSON.parse(res.text);
         expect(typeof parsedBody).toEqual("object");
@@ -47,9 +47,9 @@ describe("server", function() {
         done();
       });
   });
-  test("should accept POST requests to /classes/messages", function(done) {
+  test("올바른 POST /messages 요청을 처리할 수 있어야 합니다", function (done) {
     return request(app)
-      .post("/classes/messages")
+      .post("/messages")
       .send({
         username: "Jono",
         text: "Do my bidding!"
@@ -59,16 +59,16 @@ describe("server", function() {
         done();
       });
   });
-  test("should response with messages that were previously posted", function(done) {
+  test("GET 요청시, 최근 POST 요청을 통해 제출한 메시지가 결과로 전달되어야 합니다", function (done) {
     return request(app)
-      .post("/classes/messages")
+      .post("/messages")
       .send({
         username: "Jono",
         text: "Do my bidding!"
       })
       .then(() => {
         return request(app)
-          .get("/classes/messages")
+          .get("/messages")
           .then(res => {
             const messages = JSON.parse(res.text).results;
             expect(messages[0].username).toEqual("Jono");
@@ -77,7 +77,7 @@ describe("server", function() {
           });
       });
   });
-  test("Should 404 when asked for a nonexistent endpoint", function(done) {
+  test("존재하지 않는 endpoint를 요청할 때에, 404 상태 코드를 응답해야 합니다", function (done) {
     return request(app)
       .get("/codestates")
       .then(res => {
