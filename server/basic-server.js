@@ -1,26 +1,34 @@
-/* node 의 모듈들을 불러옵니다. */
-const http = require("http");
-// request에 대한 처리는 './request-handler.js'에 있는 모듈에서 처리하게 될 것입니다.
-// 현재 requestHandler 정의 되어 있지 않습니다. request-handler.js 에서 해당 모듈을 불러오세요.
+/*
+기존에는 const http = requie("http");
 const requestHandler = require("./request-handler");
-
-// 모든 서버는 요청을 받을수 있는 포트 번호를 필요로 합니다.
-// HTTP server의 표준 포트는 보통 80 번 이지만, 보통 다른 서버에서 사용중이기 때문에 접근할 수 없습니다.
-// 따라서 우리는 보통 테스트 서버 포트로 3000, 8080, 1337 등을 활용합니다.
-// PORT는 아파트의 호수와도 같습니다. 서버로 요청을 받기 위해서는 다음과 같이 포트 번호를 설정 합니다.
-// (* 때에 따라 다른 포트번호를 열고 싶다면, 환경 변수를 활용 하기도 합니다.)
-const port = 3000;
-
-// 아마 지금 개발 서버를 켠다면 본인의 로컬 머신에서 구동 중 일겁니다.따라서 기본적인 IP adress 는 127.0.0.1 입니다.
-// 로컬 서버 ip인 127.0.0.1은 localhost라는 이름으로 대체 될 수 있습니다.
-const ip = "127.0.0.1";
-
-// 서버를 열기 위해 nodejs 의 http 모듈을 사용할 것 입니다.
-// http.createServer 로 생성된 서버는 모든 incoming requests를 처리할 것 입니다.
 const server = http.createServer(requestHandler);
+로 node.js의 내장 모듈인 http 모듈을 이용하여 유저가 클릭하거나 네트워크 리소스를 요청시 nonblocking input/output이 이루어지게 하였다면, 
 
-//서버를 만든 후 우리는 어떤 IP 와 포트 에서 listen 할 것인지 지정 해 주어야 합니다.
-//console.log("Listening on http://" + ip + ":" + port); //확인용
-server.listen(port, ip);// server.listen() 은 node 서버가 계속해서 돌게끔 프로세스를 유지합니다.
+express는 이 http모듈을 express 서버 프레임워크를 사용해서 리펙톨링한다. 즉, http모듈이 express에 내장되어 있기 때문에 http를 import할 필요 없이
+const express = require('express'); 로 express모듈을 import하고
+const server = express(); express를 실행시킨 후
+const requestHandler = require("./request-handler");
+server.use(requestHandler); //로 http.createServer역할을 대신한다. 
+*/
+const express = require('express');
+const server = express();
 
-module.exports = server;
+const requestHandler = require("./request-handler");
+server.use(requestHandler);
+
+/*
+NODE_ENV는 2가지 값(production(배포 모드), development(개발 모드))을 가진다. 
+express는 이 모드가 무엇이냐에 따라 그 모드에 도움을 주는 환경으로 알아서 설정한다. 
+참고: https://velog.io/@yhe228/2020-02-08-1102-%EC%9E%91%EC%84%B1%EB%90%A8-o7k6czx831
+
+현 sprint에서는 필요없다고 판단하여 주석처리하고, line 29~32 처럼 코딩하였다. 
+*/
+//const PORT = process.env.NODE_ENV === "development"? 3000:3001;
+//console.log("현재 모드 : ", process.env.NODE_ENV);
+
+const PORT = 3000;
+server.listen(PORT, () => {
+  //console.log(`server listen on ${PORT}`);
+});
+
+
