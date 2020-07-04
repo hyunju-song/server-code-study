@@ -19,28 +19,12 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
-// app.use(function(res, next) {
-//   res.header("access-control-allow-origin", "*");
-//   res.header("Access-Control-Allow-Headers", "application/json");
-//   res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-//   next();
-//  });
-
 let messages = [];
 
 router.use(bodyParser.urlencoded({ extended: false }))
 router.use(bodyParser.json())
 
-app.use((req,res,next)=>{
-  // 헤더에 토큰 가져왔니? 아니면 돌아가!
-  if(req.headers.token){
-      req.user = true;
-      next()
-  } else {
-      res.status(400).send('invalid user')
-  }
-})
-router.get('/',cors(corsOptions),function(res){
+router.get('/',cors(corsOptions),function(req,res){
   res.send(JSON.stringify(messages))
 });
 router.post('/',cors(corsOptions),function(req,res){
@@ -48,10 +32,10 @@ router.post('/',cors(corsOptions),function(req,res){
   messages.push(message);
   res.send(messages)
 });
-router.options('/', cors())
+router.options('/', cors(corsOptions))
 
 
-module.exports = router
+module.exports = router;
 
 
 // let messages = {
