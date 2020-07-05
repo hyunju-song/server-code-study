@@ -11,11 +11,57 @@ const app = express(); express를 실행시킨 후
 const router = require("./request-handler");
 app.use(router); //로 http.createServer역할을 대신한다. 
 */
+/*
+middleware - bodyParser
+parsing(parse)는 가지고 있는 데이터를 내가 원하는 형태의 데이터로 '가공'하는 과정을 말한다. 
+body-Parser가 특정 문자를 기준으로 파싱하여파싱한 결과 body에 오브젝트 형태로 데이터가 담기고, 그러면 req.body에 이 객체를 저장한다. 
+그래서 클라이언트 측에서 { name: 'yejinh', job: ...} 와 같은 JSON 형식의 바디를 보내면 
+서버 측에서 req.body 혹은 req.body.name, req.body.job 등으로 해당 데이터에 곧바로 접근할 수 있게 된다.
+
+즉, 이전의 
+let message = ''
+request.on('data', (chunk) => {
+  message += chunk;
+})
+.on('end', () => {
+  var post = JSON.parse(message);
+에 해당하는 부분이
+
+express를 사용하면 
+const bodyParser = require('body-parser');
+router.use(bodyParser.json());
+let message = req.body;
+로 바뀝니다. 
+*/
+
+/*
+CORS
+이전의 CORS부분은
+const headers = defaultCorsHeaders;
+const defaultCorsHeaders = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "access-control-allow-headers": "content-type, accept",
+  "access-control-max-age": 10 // Seconds.
+};
+express에서는
+참고: https://github.com/expressjs/cors
+  origin: Access-Control-Allow-Origin CORS 헤더를 구성.
+  methods: Access-Control-Allow-Methods CORS 헤더를 구성합니다. 쉼표로 구분 된 문자열 (예 : 'GET, PUT, POST') 
+  또는 배열 (예 :)이 필요 ['GET', 'PUT', 'POST']합니다.
+  allowedHeaders: Access-Control-Allow-Headers CORS 헤더를 구성.
+  exposedHeaders: Access-Control-Expose-Headers CORS 헤더를 구성. 
+  credentials: Access-Control-Allow-Credentials CORS 헤더를 구성.
+  maxAge: Access-Control-Max-Age CORS 헤더를 구성.
+  그리고 이들은 배열이나 **쉼표** 로 구분된 문자열로 지정해주면 됩니다. 
+그래서 이전부분과 같게 하려면
+*/
+
 const express = require('express');
 const app = express();
-const router = require('./request-handler')
+const router = require('./routers')
 
-app.use(router)
+app.use('/', router)
 
 /*
 NODE_ENV는 2가지 값(production(배포 모드), development(개발 모드))을 가진다. 
@@ -31,5 +77,7 @@ const PORT = 3000;
 app.listen(PORT, () => {
   //console.log(`server listen on ${PORT}`);
 });
+
+module.exports = app;
 
 

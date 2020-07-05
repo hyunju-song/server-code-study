@@ -1,3 +1,6 @@
+//레퍼런스랑 달리 모델과 라우터를 분리하지 않고
+//한 파일에 다 refactoring 한 버전
+
 const express = require('express');
 const app = express();
 /*
