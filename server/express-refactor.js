@@ -64,7 +64,7 @@ express에서는
 
 var corsOptions = {
   origin: '*' ,
-  methods: 'GET, PUT, POST',
+  methods: 'GET, PUT, POST , OPTION',
   allowedHeaders: 'Content-Type, Accept',
   maxAge: 10
   //optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204

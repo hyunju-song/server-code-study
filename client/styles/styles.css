@@ -60,34 +60,6 @@ form input[type="text"] {
   padding: 5px;
 }
 
-form textarea {
-    width: 90%;
-    height: 100px;
-    margin: 5px 0;
-    font-size: 120%;
-    padding: 10px;
-}
-
-form button {
-    font-size: 120%;
-    height: 30px;
-    width: 100px;
-}
-
-form textarea {
-    width: 90%;
-    height: 100px;
-    margin: 5px 0;
-    font-size: 120%;
-    padding: 10px;
-}
-
-form button {
-    font-size: 120%;
-    height: 30px;
-    width: 100px;
-}
-
 .chat {
   padding: 5px;
   margin-bottom: 5px;
@@ -115,4 +87,41 @@ form button {
 .friend {
   color: #fff;
   background-color: #0090da;
+}
+
+.select{
+  display: inline;
+}
+
+.message-box {
+  margin-top: 10px;
+}
+
+#message {
+  width: 50%;
+  /* height: 30px;  */
+}
+
+#submit {
+  /* position: absolute; */
+  margin-top: 10px;
+}
+
+#chats div.dataId{
+  background-color: #e3e3e3;
+  padding: 5px;
+  margin : 10px 0px;
+}
+
+#chats div p:first-child{
+  font-weight: 800;
+}
+
+/* #chats div div{
+  display: block;
+} */
+
+.user,
+.room {
+  margin-bottom: 10px;
 }
